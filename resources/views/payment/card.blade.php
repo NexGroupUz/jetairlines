@@ -21,47 +21,85 @@
             <p><strong>Товар:</strong> {{ $order->product_name }}</p>
             <p><strong>Сумма:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
 
-            <form class="form" method="POST" action="{{ route('payment.pre_apply', $order) }}">
+            <form class="form" method="POST" action="{{ route('payment.pre_apply', $order) }}" id="cardPaymentForm">
                 @csrf
 
                 <div class="field">
-                    <label>Номер карты</label>
+                    <label for="card_number">Номер карты</label>
                     <input
+                        id="card_number"
                         type="text"
                         name="card_number"
-                        placeholder="9860090101014364"
+                        inputmode="numeric"
+                        autocomplete="cc-number"
+                        placeholder="9860 0901 0101 4364"
+                        maxlength="19"
+                        pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$"
+                        value="{{ old('card_number') }}"
                         required
                     >
+                    <small>Введите 16 цифр номера карты.</small>
                 </div>
 
                 <div class="field">
-                    <label>Срок действия карты</label>
+                    <label for="expiry">Срок действия карты</label>
                     <input
+                        id="expiry"
                         type="text"
                         name="expiry"
-                        placeholder="2802"
+                        inputmode="numeric"
+                        autocomplete="cc-exp"
+                        placeholder="02/28"
+                        maxlength="5"
+                        pattern="^(0[1-9]|1[0-2])\/\d{2}$"
+                        value="{{ old('expiry') }}"
                         required
                     >
-                    <small>Формат: YYMM. Например, для 02/28 нужно указать 2802.</small>
+                    <small>Формат: MM/YY. Например: 02/28.</small>
                 </div>
 
                 <button class="btn" type="submit">
                     Получить OTP
                 </button>
             </form>
-
-            <h2>Тестовые данные</h2>
-            <p>OTP для тестовых карт: <strong>111111</strong></p>
-
-            <ul>
-                <li>9860090101014364 — 02/28</li>
-                <li>9860090101893213 — 02/28</li>
-                <li>9860090101842392 — 02/28</li>
-                <li>9860090101469915 — 02/28</li>
-                <li>5614688715378807 — 03/29</li>
-            </ul>
         </div>
     </div>
 </section>
+
+<script>
+    const cardInput = document.getElementById('card_number');
+    const expiryInput = document.getElementById('expiry');
+    const form = document.getElementById('cardPaymentForm');
+
+    cardInput.addEventListener('input', function () {
+        let value = this.value.replace(/\D/g, '').slice(0, 16);
+
+        this.value = value.replace(/(.{4})/g, '$1 ').trim();
+    });
+
+    expiryInput.addEventListener('input', function () {
+        let value = this.value.replace(/\D/g, '').slice(0, 4);
+
+        if (value.length >= 3) {
+            value = value.slice(0, 2) + '/' + value.slice(2);
+        }
+
+        this.value = value;
+    });
+
+    form.addEventListener('submit', function () {
+        cardInput.value = cardInput.value.replace(/\D/g, '');
+
+        const expiryDigits = expiryInput.value.replace(/\D/g, '');
+
+        if (expiryDigits.length === 4) {
+            const month = expiryDigits.slice(0, 2);
+            const year = expiryDigits.slice(2, 4);
+
+            // Atmos ждёт YYMM: 02/28 -> 2802
+            expiryInput.value = year + month;
+        }
+    });
+</script>
 
 @endsection

@@ -8,17 +8,13 @@
     <div class="container">
         <div class="content-card">
             <div class="alert alert-error">
-                Оплату не удалось завершить.
+                {{ $error }}
             </div>
 
             <h1>Ошибка оплаты</h1>
 
             <p><strong>Номер заказа:</strong> {{ $order->account }}</p>
             <p><strong>Статус:</strong> {{ $order->status }}</p>
-
-            @if($error)
-                <p><strong>Техническая ошибка:</strong> {{ $error }}</p>
-            @endif
 
             <p>
                 <a class="btn btn-secondary" href="{{ route('home') }}">

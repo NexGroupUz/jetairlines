@@ -15,6 +15,8 @@ class Order extends Model
         'email',
         'account',
         'status',
+        'is_test_card',
+        'card_pan_mask',
         'atmos_transaction_id',
         'atmos_store_trans_id',
         'atmos_create_response',
@@ -25,6 +27,7 @@ class Order extends Model
 
     protected $casts = [
         'amount' => 'integer',
+        'is_test_card' => 'boolean',
         'atmos_create_response' => 'array',
         'atmos_pre_apply_response' => 'array',
         'atmos_apply_response' => 'array',

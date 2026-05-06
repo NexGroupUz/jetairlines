@@ -26,10 +26,32 @@ class PaymentController extends Controller
     public function create(Request $request, AtmosService $atmos): RedirectResponse
     {
         $data = $request->validate([
-            'product_slug' => ['required', 'string'],
-            'customer_name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'max:30'],
-            'email' => ['nullable', 'email', 'max:255'],
+            'product_slug' => [
+                'required',
+                'string',
+            ],
+            'customer_name' => [
+                'required',
+                'string',
+                'min:2',
+                'max:255',
+            ],
+            'phone' => [
+                'required',
+                'string',
+                'regex:/^\+[1-9]\d{7,14}$/',
+            ],
+            'email' => [
+                'nullable',
+                'email',
+                'max:255',
+            ],
+        ], [
+            'customer_name.required' => 'Введите имя.',
+            'customer_name.min' => 'Имя должно содержать минимум 2 символа.',
+            'phone.required' => 'Введите номер телефона.',
+            'phone.regex' => 'Введите номер телефона в международном формате. Например: +998901234567.',
+            'email.email' => 'Введите корректный email.',
         ]);
 
         $product = Products::find($data['product_slug']);
@@ -88,9 +110,31 @@ class PaymentController extends Controller
     public function preApply(Request $request, Order $order, AtmosService $atmos): RedirectResponse
     {
         $data = $request->validate([
-            'card_number' => ['required', 'string', 'max:30'],
-            'expiry' => ['required', 'string', 'max:10'],
+            'card_number' => [
+                'required',
+                'string',
+                'regex:/^\d{16}$/',
+            ],
+            'expiry' => [
+                'required',
+                'string',
+                'regex:/^\d{4}$/',
+            ],
+        ], [
+            'card_number.required' => 'Введите номер карты.',
+            'card_number.regex' => 'Номер карты должен содержать ровно 16 цифр.',
+            'expiry.required' => 'Введите срок действия карты.',
+            'expiry.regex' => 'Срок действия карты должен быть в формате YYMM.',
         ]);
+
+        $expiryYear = substr($data['expiry'], 0, 2);
+        $expiryMonth = substr($data['expiry'], 2, 2);
+
+        if ((int) $expiryMonth < 1 || (int) $expiryMonth > 12) {
+            return back()->withErrors([
+                'expiry' => 'Месяц срока действия карты должен быть от 01 до 12.',
+            ])->withInput();
+        }
 
         if (!$order->atmos_transaction_id) {
             return back()->withErrors([
@@ -107,6 +151,8 @@ class PaymentController extends Controller
 
             $order->update([
                 'status' => 'pre_applied',
+                'is_test_card' => $this->isAtmosTestCard($data['card_number']),
+                'card_pan_mask' => $this->maskCardNumber($data['card_number']),
                 'atmos_pre_apply_response' => $response,
             ]);
         } catch (Throwable $e) {
@@ -144,9 +190,10 @@ class PaymentController extends Controller
         }
 
         try {
-            $response = $atmos->apply(
+            $response = $atmos->applyWithRetryMode(
                 transactionId: $order->atmos_transaction_id,
-                otp: $data['otp']
+                otp: $data['otp'],
+                isTestCard: $order->is_test_card
             );
 
             $order->update([
@@ -182,5 +229,28 @@ class PaymentController extends Controller
             'order' => $order,
             'error' => session('error'),
         ]);
+    }
+
+    private function normalizeCardNumber(string $cardNumber): string
+    {
+        return preg_replace('/\D+/', '', $cardNumber);
+    }
+
+    private function maskCardNumber(string $cardNumber): string
+    {
+        $digits = $this->normalizeCardNumber($cardNumber);
+
+        if (strlen($digits) < 10) {
+            return '***';
+        }
+
+        return substr($digits, 0, 6)
+            . str_repeat('*', max(strlen($digits) - 10, 0))
+            . substr($digits, -4);
+    }
+
+    private function isAtmosTestCard(string $cardNumber): bool
+    {
+        return in_array($this->normalizeCardNumber($cardNumber), AtmosService::TEST_CARDS, true);
     }
 }

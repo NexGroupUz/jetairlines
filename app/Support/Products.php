@@ -13,7 +13,7 @@ class Products
                 'name' => 'Курага отборная',
                 'description' => 'Натуральная курага для оптовых и розничных поставок.',
                 'price' => 120000,
-                'image' => 'https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?q=80&w=1200&auto=format&fit=crop',
+                'image' => 'https://images.unsplash.com/photo-1595412017587-b7f3117dff54?q=80&w=2346&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             ],
             [
                 'slug' => 'raisins-premium',
@@ -29,7 +29,7 @@ class Products
                 'name' => 'Цемент М500',
                 'description' => 'Строительный цемент для объектов разного масштаба.',
                 'price' => 68000,
-                'image' => 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop',
+                'image' => 'https://plus.unsplash.com/premium_photo-1683121530725-e9ddd6c74ef1?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             ],
             [
                 'slug' => 'metal-profile',
@@ -37,7 +37,7 @@ class Products
                 'name' => 'Металлопрофиль',
                 'description' => 'Профиль для кровли, фасадов и строительных конструкций.',
                 'price' => 145000,
-                'image' => 'https://images.unsplash.com/photo-1581092919535-7146ff1a590b?q=80&w=1200&auto=format&fit=crop',
+                'image' => 'https://plus.unsplash.com/premium_photo-1677172409352-44e6d642c320?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             ],
             [
                 'slug' => 'cnc-machine',
@@ -45,7 +45,7 @@ class Products
                 'name' => 'CNC станок',
                 'description' => 'Оборудование для обработки металла и промышленных задач.',
                 'price' => 5000000,
-                'image' => 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=1200&auto=format&fit=crop',
+                'image' => 'https://images.unsplash.com/photo-1666618090858-fbcee636bd3e?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             ],
             [
                 'slug' => 'cutting-machine',
@@ -53,7 +53,7 @@ class Products
                 'name' => 'Отрезной станок',
                 'description' => 'Промышленный станок для точной резки материалов.',
                 'price' => 3500000,
-                'image' => 'https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?q=80&w=1200&auto=format&fit=crop',
+                'image' => 'https://images.unsplash.com/photo-1515630771457-09367d0ae038?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             ],
         ];
     }

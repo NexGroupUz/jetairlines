@@ -127,6 +127,12 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'atmos' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/atmos.log'),
+            'level' => env('ATMOS_LOG_LEVEL', 'debug'),
+            'days' => 14,
+        ],
     ],
 
 ];
