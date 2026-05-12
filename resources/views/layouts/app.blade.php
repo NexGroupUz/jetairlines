@@ -801,6 +801,198 @@
         gap: 12px;
     }
 }
+
+
+.equipment-page {
+    background:
+        radial-gradient(circle at 90% 10%, rgba(31, 79, 216, .12), transparent 32%),
+        linear-gradient(135deg, #f8fafc 0%, #eef4ff 100%);
+}
+
+.equipment-hero {
+    max-width: 820px;
+    margin-bottom: 42px;
+}
+
+.equipment-hero h1 {
+    margin: 20px 0;
+    font-size: clamp(38px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.06em;
+    color: var(--dark);
+}
+
+.equipment-hero p {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 720px;
+}
+
+.equipment-layout {
+    display: grid;
+    grid-template-columns: 1fr .45fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.section-head.compact {
+    display: block;
+    margin-bottom: 24px;
+}
+
+.section-head.compact h2 {
+    margin-top: 14px;
+}
+
+.equipment-docs {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 30px;
+}
+
+.docs-list {
+    display: grid;
+    gap: 14px;
+}
+
+.doc-card {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    gap: 18px;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 18px;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.doc-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(31, 79, 216, .28);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, .08);
+}
+
+.doc-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background: var(--dark);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    letter-spacing: .04em;
+}
+
+.doc-card h3 {
+    margin: 0 0 6px;
+    color: var(--dark);
+    font-size: 20px;
+}
+
+.doc-card p {
+    margin: 0 0 8px;
+    color: var(--muted);
+}
+
+.doc-card span {
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.equipment-note {
+    background:
+        radial-gradient(circle at 20% 20%, rgba(96, 165, 250, .28), transparent 36%),
+        var(--dark);
+    color: white;
+    border-radius: 30px;
+    padding: 30px;
+    min-height: auto;
+}
+
+.equipment-note span {
+    display: inline-flex;
+    margin-bottom: 18px;
+    color: #93c5fd;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.equipment-note h3 {
+    margin: 0 0 14px;
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.equipment-note p {
+    margin: 0;
+    color: #cbd5e1;
+}
+
+.equipment-gallery {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.equipment-photo {
+    display: block;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-radius: 28px;
+    background: #e2e8f0;
+    border: 1px solid var(--border);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, .08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.equipment-photo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, .14);
+}
+
+.equipment-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 1000px) {
+    .equipment-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .equipment-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .equipment-docs,
+    .equipment-note {
+        padding: 22px;
+    }
+
+    .doc-card {
+        grid-template-columns: 1fr;
+    }
+
+    .doc-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .equipment-gallery {
+        grid-template-columns: 1fr;
+    }
+}
     </style>
 </head>
 <body>
@@ -811,6 +1003,7 @@
 
         <nav class="nav">
             <a href="{{ route('home') }}">Главная</a>
+            <a href="{{ route('equipment') }}">Оборудование</a>
             <a href="{{ route('offer') }}">Оферта</a>
             <a href="{{ route('agreement') }}">Пользовательское соглашение</a>
             <a href="{{ route('policy') }}">Политика конфиденциальности</a>

@@ -28,4 +28,72 @@ class PageController extends Controller
     {
         return view('pages.offer');
     }
+
+    public function equipment(): View
+    {
+        $documents = [
+            [
+                'title' => 'Спецификация №1 от 23.11.23',
+                'description' => 'Технический документ или спецификация оборудования.',
+                'file' => asset('files/equipment/document-1.xlsx'),
+                'type' => 'XLSX',
+            ],
+            [
+                'title' => 'Свод запчастей до кроссировки',
+                'description' => 'Дополнительная информация по оборудованию.',
+                'file' => asset('files/equipment/document-2.xlsx'),
+                'type' => 'XLSX',
+            ],
+            [
+                'title' => 'Фальшпол',
+                'description' => 'Дополнительная информация по оборудованию.',
+                'file' => asset('files/equipment/document-3.xlsx'),
+                'type' => 'XLSX',
+            ],
+            [
+                'title' => 'Насосы',
+                'description' => 'Дополнительная информация по оборудованию.',
+                'file' => asset('files/equipment/document-4.xlsx'),
+                'type' => 'XLSX',
+            ],
+            [
+                'title' => '2_5235689451652419015',
+                'description' => 'Дополнительная информация по оборудованию.',
+                'file' => asset('files/equipment/document-5.xlsx'),
+                'type' => 'XLSX',
+            ],
+            [
+                'title' => 'KRASIVOE_DELO_LLC__Russia__25_March_2026__6_Servo_VFFS_Quote',
+                'description' => 'Коммерческое предложение и техническая информация.',
+                'file' => asset('files/equipment/document-6.pdf'),
+                'type' => 'PDF',
+            ],
+            [
+                'title' => 'Техн.свет+Китай+Польша',
+                'description' => 'Дополнительные технические материалы.',
+                'file' => asset('files/equipment/document-7.pdf'),
+                'type' => 'PDF',
+            ],
+        ];
+
+        $certificates = [
+            [
+                'title' => 'Сертификат соответствия',
+                'description' => 'Сертификационный документ по оборудованию.',
+                'file' => asset('files/equipment/febest_ru_c-de.oc13.b.02344.pdf'),
+                'type' => 'PDF',
+            ],
+        ];
+
+        $photos = [
+            asset('images/equipment/photo-1.jpg'),
+            asset('images/equipment/photo-2.jpg'),
+        ];
+
+        return view('pages.equipment', [
+            'documents' => $documents,
+            'certificates' => $certificates,
+            'photos' => $photos,
+        ]);
+    }
 }

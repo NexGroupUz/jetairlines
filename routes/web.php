@@ -21,3 +21,5 @@ Route::post('/payment/{order}/apply', [PaymentController::class, 'apply'])->name
 
 Route::get('/payment/{order}/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/{order}/failed', [PaymentController::class, 'failed'])->name('payment.failed');
+
+Route::get('/equipment', [PageController::class, 'equipment'])->name('equipment');
