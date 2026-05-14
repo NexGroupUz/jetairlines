@@ -17,12 +17,8 @@
             <p><strong>Товар:</strong> {{ $order->product_name }}</p>
             <p><strong>Сумма:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
 
-            @if($order->ofd_url)
-                <p>
-                    <a class="btn" href="{{ $order->ofd_url }}" target="_blank">
-                        Открыть чек OFD
-                    </a>
-                </p>
+            @if($order->paid_at)
+                <p><strong>Дата оплаты:</strong> {{ $order->paid_at->format('d.m.Y H:i') }}</p>
             @endif
 
             <p>

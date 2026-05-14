@@ -993,6 +993,69 @@
         grid-template-columns: 1fr;
     }
 }
+
+.payment-logos {
+    width: min(1180px, calc(100% - 32px));
+    margin: 18px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.payment-logos span {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.payment-logos img {
+    display: block;
+    max-width: 78px;
+    max-height: 32px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    padding: 6px 10px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.payment-logos img[alt="Visa"] {
+    max-width: 70px;
+}
+
+.payment-logos img[alt="Mastercard"] {
+    max-width: 86px;
+}
+
+.payment-logos img[alt="Humo"],
+.payment-logos img[alt="Uzcard"] {
+    max-width: 82px;
+}
+
+@media (max-width: 640px) {
+    .payment-logos {
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .payment-logos span {
+        width: 100%;
+        margin-bottom: 4px;
+    }
+
+    .payment-logos img {
+        max-width: 72px;
+        max-height: 30px;
+        padding: 5px 8px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1016,11 +1079,21 @@
 </main>
 
 <footer class="footer">
-    <div class="container footer-inner">
-        <div>© {{ date('Y') }} Jet Airlines. Все права защищены.</div>
-        <div>
-            <a href="{{ route('offer') }}">Оферта</a> ·
-            <a href="{{ route('policy') }}">Политика</a>
+    <div class="container">
+        <div class="footer-inner">
+            <div>© {{ date('Y') }} Jet Airlines. Все права защищены.</div>
+            <div>
+                <a href="{{ route('offer') }}">Оферта</a> ·
+                <a href="{{ route('policy') }}">Политика</a>
+            </div>
+        </div>
+
+        <div class="payment-logos">
+            <span>Принимаем к оплате:</span>
+            <img src="{{ asset('images/payment/visa.svg') }}" alt="Visa">
+            <img src="{{ asset('images/payment/mastercard.svg') }}" alt="Mastercard">
+            <img src="{{ asset('images/payment/humo.png') }}" alt="Humo">
+            <img src="{{ asset('images/payment/uzcard.svg') }}" alt="Uzcard">
         </div>
     </div>
 </footer>

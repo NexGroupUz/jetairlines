@@ -133,6 +133,12 @@ return [
             'level' => env('ATMOS_LOG_LEVEL', 'debug'),
             'days' => 14,
         ],
+        'octo' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/octo.log'),
+            'level' => env('OCTO_LOG_LEVEL', 'debug'),
+            'days' => 14,
+        ],
     ],
 
 ];
