@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 
+Route::get('/sales', [PageController::class, 'sales'])->name('sales');
+Route::get('/aviation', [PageController::class, 'aviation'])->name('aviation');
+Route::get('/cargo', [PageController::class, 'cargo'])->name('cargo');
+
 Route::get('/equipment', [PageController::class, 'equipment'])->name('equipment');
 
 Route::get('/policy', [PageController::class, 'policy'])->name('policy');
@@ -20,4 +24,5 @@ Route::post('/payment/octo/notify', [PaymentController::class, 'octoNotify'])->n
 
 Route::get('/payment/{order}/pending', [PaymentController::class, 'pending'])->name('payment.pending');
 Route::get('/payment/{order}/status', [PaymentController::class, 'status'])->name('payment.status');
+Route::get('/payment/{order}/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/{order}/failed', [PaymentController::class, 'failed'])->name('payment.failed');

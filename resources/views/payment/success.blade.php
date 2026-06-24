@@ -15,7 +15,16 @@
 
             <p><strong>Номер заказа:</strong> {{ $order->account }}</p>
             <p><strong>Товар:</strong> {{ $order->product_name }}</p>
-            <p><strong>Сумма:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
+
+            @if($order->amount_usd)
+                <p><strong>Стоимость:</strong> ${{ number_format((float) $order->amount_usd, 2, '.', ' ') }}</p>
+            @endif
+
+            @if($order->usd_rate)
+                <p><strong>Курс USD:</strong> {{ number_format((float) $order->usd_rate, 2, '.', ' ') }} сум</p>
+            @endif
+
+            <p><strong>Оплачено:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
 
             @if($order->paid_at)
                 <p><strong>Дата оплаты:</strong> {{ $order->paid_at->format('d.m.Y H:i') }}</p>

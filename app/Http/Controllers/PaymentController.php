@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Services\CbuCurrencyService;
 use App\Services\OctoService;
 use App\Support\Products;
 use Illuminate\Http\RedirectResponse;
@@ -13,43 +14,30 @@ use Throwable;
 
 class PaymentController extends Controller
 {
-    public function checkout(string $slug): View
+    public function checkout(string $slug, CbuCurrencyService $currency): View
     {
         $product = Products::find($slug);
 
         abort_if(!$product, 404);
 
+        $usdRate = $currency->usdRate();
+        $amountUzs = $currency->usdToUzs((float) $product['price_usd']);
+
         return view('payment.checkout', [
             'product' => $product,
+            'usdRate' => $usdRate,
+            'amountUzs' => $amountUzs,
         ]);
     }
 
-    public function create(Request $request, OctoService $octo): RedirectResponse
+    public function create(Request $request, OctoService $octo, CbuCurrencyService $currency): RedirectResponse
     {
         $data = $request->validate([
-            'product_slug' => [
-                'required',
-                'string',
-            ],
-            'customer_name' => [
-                'required',
-                'string',
-                'min:2',
-                'max:255',
-            ],
-            'phone' => [
-                'required',
-                'string',
-                'regex:/^\+[1-9]\d{7,14}$/',
-            ],
-            'email' => [
-                'nullable',
-                'email',
-                'max:255',
-            ],
-            'accept_terms' => [
-                'accepted',
-            ],
+            'product_slug' => ['required', 'string'],
+            'customer_name' => ['required', 'string', 'min:2', 'max:255'],
+            'phone' => ['required', 'string', 'regex:/^\+[1-9]\d{7,14}$/'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'accept_terms' => ['accepted'],
         ], [
             'customer_name.required' => 'Введите имя.',
             'customer_name.min' => 'Имя должно содержать минимум 2 символа.',
@@ -67,10 +55,20 @@ class PaymentController extends Controller
             ])->withInput();
         }
 
+        $amountUsd = (float) $product['price_usd'];
+        $usdRate = $currency->usdRate();
+        $amountUzs = $currency->usdToUzs($amountUsd);
+
         $order = Order::create([
             'product_slug' => $product['slug'],
             'product_name' => $product['name'],
-            'amount' => $product['price'],
+
+            // amount оставляем как сумму оплаты в UZS, чтобы OCTO работал без переделки
+            'amount' => $amountUzs,
+            'amount_usd' => $amountUsd,
+            'usd_rate' => $usdRate,
+            'amount_uzs' => $amountUzs,
+
             'customer_name' => $data['customer_name'],
             'phone' => $data['phone'],
             'email' => $data['email'] ?? null,
@@ -81,7 +79,6 @@ class PaymentController extends Controller
 
         try {
             $response = $octo->preparePayment($order);
-
             $payUrl = $octo->extractPaymentUrl($response);
 
             $order->update([
@@ -173,6 +170,15 @@ class PaymentController extends Controller
             'failed' => redirect()->route('payment.failed', $order),
             default => redirect()->route('payment.pending', $order),
         };
+    }
+
+    public function success(Order $order): View
+    {
+        abort_if($order->status !== 'paid', 404);
+
+        return view('payment.success', [
+            'order' => $order,
+        ]);
     }
 
     public function failed(Order $order): View

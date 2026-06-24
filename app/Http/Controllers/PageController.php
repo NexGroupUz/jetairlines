@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\Products;
+use App\Support\Aircraft;
 use Illuminate\View\View;
 
 class PageController extends Controller
@@ -10,7 +11,30 @@ class PageController extends Controller
     public function home(): View
     {
         return view('pages.home', [
+            'salesProducts' => Products::sales(),
+            'aviationProducts' => Products::aviation(),
             'products' => Products::all(),
+        ]);
+    }
+
+    public function sales(): View
+    {
+        return view('pages.sales', [
+            'products' => Products::sales(),
+        ]);
+    }
+
+    public function aviation(): View
+    {
+        return view('pages.aviation', [
+            'products' => Products::aviation(),
+        ]);
+    }
+
+    public function cargo(): View
+    {
+        return view('pages.cargo', [
+            'aircraft' => Aircraft::cargo(),
         ]);
     }
 
@@ -80,7 +104,7 @@ class PageController extends Controller
             [
                 'title' => 'Сертификат соответствия',
                 'description' => 'Сертификационный документ по оборудованию.',
-                'file' => asset('files/equipment/febest_ru_c-de.oc13.b.02344.pdf'),
+                'file' => asset('files/equipment/certificate-1.pdf'),
                 'type' => 'PDF',
             ],
         ];

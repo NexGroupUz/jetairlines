@@ -22,7 +22,17 @@
 
             <p>
                 <strong>Стоимость:</strong>
-                {{ number_format($product['price'], 0, '.', ' ') }} сум
+                ${{ number_format($product['price_usd'], 2, '.', ' ') }}
+            </p>
+
+            <p>
+                <strong>Курс USD:</strong>
+                {{ number_format($usdRate, 2, '.', ' ') }} сум
+            </p>
+
+            <p>
+                <strong>К оплате:</strong>
+                {{ number_format($amountUzs, 0, '.', ' ') }} сум
             </p>
 
             <form class="form" method="POST" action="{{ route('payment.create') }}" id="checkoutForm">
@@ -70,11 +80,21 @@
                         autocomplete="email"
                         maxlength="255"
                     >
-                    <small>Email необязателен, но нужен для отправки информации по заказу.</small>
+                </div>
+
+                <div class="field checkbox-field">
+                    <label>
+                        <input type="checkbox" name="accept_terms" value="1" required>
+                        Я ознакомился и принимаю условия
+                        <a href="{{ route('offer') }}" target="_blank">Публичной оферты</a>,
+                        <a href="{{ route('agreement') }}" target="_blank">Пользовательского соглашения</a>
+                        и
+                        <a href="{{ route('policy') }}" target="_blank">Политики конфиденциальности</a>.
+                    </label>
                 </div>
 
                 <button class="btn" type="submit">
-                    Перейти к оплате
+                    Оплатить
                 </button>
             </form>
         </div>
@@ -88,10 +108,7 @@
     phoneInput.addEventListener('input', function () {
         let value = this.value;
 
-        // Разрешаем только цифры, +, пробел, дефис, скобки
         value = value.replace(/[^\d+\s().-]/g, '');
-
-        // + можно использовать только в начале
         value = value.replace(/(?!^)\+/g, '');
 
         this.value = value;
@@ -99,10 +116,7 @@
 
     checkoutForm.addEventListener('submit', function () {
         let phone = phoneInput.value.trim();
-
-        // Убираем пробелы, скобки и дефисы перед отправкой
         phone = phone.replace(/[\s().-]/g, '');
-
         phoneInput.value = phone;
     });
 </script>

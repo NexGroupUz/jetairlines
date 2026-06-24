@@ -10,6 +10,9 @@ class Order extends Model
         'product_slug',
         'product_name',
         'amount',
+        'amount_usd',
+        'usd_rate',
+        'amount_uzs',
         'customer_name',
         'phone',
         'email',
@@ -40,6 +43,9 @@ class Order extends Model
     protected $casts = [
         'amount' => 'integer',
         'is_test_card' => 'boolean',
+        'amount_usd' => 'decimal:2',
+        'usd_rate' => 'decimal:2',
+        'amount_uzs' => 'integer',
 
         'octo_prepare_response' => 'array',
         'octo_notify_payload' => 'array',

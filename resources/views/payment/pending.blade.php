@@ -16,7 +16,12 @@
 
             <p><strong>Номер заказа:</strong> {{ $order->account }}</p>
             <p><strong>Товар:</strong> {{ $order->product_name }}</p>
-            <p><strong>Сумма:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
+
+            @if($order->amount_usd)
+                <p><strong>Стоимость:</strong> ${{ number_format((float) $order->amount_usd, 2, '.', ' ') }}</p>
+            @endif
+
+            <p><strong>К оплате:</strong> {{ number_format($order->amount, 0, '.', ' ') }} сум</p>
 
             <p>
                 <a class="btn" href="{{ route('payment.status', $order) }}">

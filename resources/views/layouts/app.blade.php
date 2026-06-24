@@ -1056,6 +1056,276 @@
         padding: 5px 8px;
     }
 }
+
+.business-groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.business-group-card {
+    display: block;
+    min-height: 340px;
+    border-radius: 32px;
+    padding: 34px;
+    border: 1px solid var(--border);
+    background: white;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.business-group-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(31, 79, 216, .28);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, .12);
+}
+
+.business-group-card span {
+    display: inline-flex;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark);
+    color: white;
+    font-weight: 900;
+    margin-bottom: 34px;
+}
+
+.business-group-card h3 {
+    margin: 0 0 14px;
+    font-size: 32px;
+    line-height: 1.05;
+    color: var(--dark);
+    letter-spacing: -0.04em;
+}
+
+.business-group-card p {
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 28px;
+}
+
+.business-group-card strong {
+    color: var(--blue);
+}
+
+.aviation-card {
+    background:
+        radial-gradient(circle at 80% 20%, rgba(31, 79, 216, .14), transparent 32%),
+        white;
+}
+
+.sales-card {
+    background:
+        radial-gradient(circle at 80% 20%, rgba(15, 23, 42, .10), transparent 32%),
+        white;
+}
+
+.aircraft-table-wrap {
+    overflow-x: auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 26px;
+}
+
+.aircraft-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 820px;
+}
+
+.aircraft-table th,
+.aircraft-table td {
+    padding: 18px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.aircraft-table th {
+    background: #f8fafc;
+    color: var(--dark);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.aircraft-table td {
+    color: var(--muted);
+}
+
+.aircraft-table td:first-child {
+    color: var(--dark);
+    font-weight: 800;
+}
+
+.aircraft-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.table-note {
+    color: var(--muted);
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.checkbox-field label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: 400;
+    color: var(--muted);
+}
+
+.checkbox-field input {
+    width: 18px;
+    height: 18px;
+    min-height: 18px;
+    margin-top: 3px;
+    flex: 0 0 auto;
+}
+
+.checkbox-field a {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .business-groups {
+        grid-template-columns: 1fr;
+    }
+
+    .business-group-card {
+        min-height: auto;
+        padding: 26px;
+    }
+}
+
+.aircraft-list {
+    display: grid;
+    gap: 24px;
+}
+
+.aircraft-card {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 34px;
+    align-items: center;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 18px;
+    box-shadow: 0 18px 46px rgba(15, 23, 42, .06);
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.aircraft-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(31, 79, 216, .24);
+    box-shadow: 0 26px 70px rgba(15, 23, 42, .10);
+}
+
+.aircraft-image {
+    height: 230px;
+    border-radius: 22px;
+    overflow: hidden;
+    background: #e2e8f0;
+    border: 1px solid var(--border);
+}
+
+.aircraft-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.aircraft-content {
+    padding: 12px 16px 12px 0;
+}
+
+.aircraft-label {
+    display: inline-flex;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 10px;
+}
+
+.aircraft-content h3 {
+    margin: 0 0 22px;
+    font-size: 30px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--dark);
+}
+
+.aircraft-specs {
+    display: grid;
+    gap: 12px;
+}
+
+.aircraft-specs div {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.aircraft-specs div:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.aircraft-specs strong {
+    color: var(--dark);
+    font-size: 14px;
+}
+
+.aircraft-specs span {
+    color: var(--muted);
+    font-size: 15px;
+}
+
+@media (max-width: 1000px) {
+    .aircraft-card {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .aircraft-content {
+        padding: 0;
+    }
+
+    .aircraft-image {
+        height: 300px;
+    }
+}
+
+@media (max-width: 640px) {
+    .aircraft-card {
+        padding: 14px;
+        border-radius: 22px;
+    }
+
+    .aircraft-image {
+        height: 220px;
+        border-radius: 18px;
+    }
+
+    .aircraft-content h3 {
+        font-size: 24px;
+    }
+
+    .aircraft-specs div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
     </style>
 </head>
 <body>
@@ -1066,10 +1336,12 @@
 
         <nav class="nav">
             <a href="{{ route('home') }}">Главная</a>
+            <a href="{{ route('aviation') }}">Авиационные услуги</a>
+            <a href="{{ route('cargo') }}">Грузоперевозки</a>
+            <a href="{{ route('sales') }}">Продажа</a>
             <a href="{{ route('equipment') }}">Оборудование</a>
             <a href="{{ route('offer') }}">Оферта</a>
-            <a href="{{ route('agreement') }}">Пользовательское соглашение</a>
-            <a href="{{ route('policy') }}">Политика конфиденциальности</a>
+            <a href="{{ route('policy') }}">Политика</a>
         </nav>
     </div>
 </header>

@@ -239,10 +239,6 @@ class OctoService
 
     private function toOctoAmount(int $amount): float
     {
-        /**
-         * У тебя цены в базе сейчас хранятся в сумах.
-         * OCTO в примере принимает 1000.0 UZS, не тийины.
-         */
         return (float) $amount;
     }
 
